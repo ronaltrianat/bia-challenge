@@ -1,0 +1,34 @@
+[
+    {
+      "MeterID": 1,
+      "ActiveEnergy": "1214.2625",
+      "ReactiveEnergy": "1214.2625",
+      "CapacitiveReactive": "1214.2625",
+      "Solar": "1214.2625",
+      "Date": "2023-08-19T20:34:58.651387237Z"
+    },
+    {
+      "MeterID": 1,
+      "ActiveEnergy": "1214.2625",
+      "ReactiveEnergy": "1214.2625",
+      "CapacitiveReactive": "1214.2625",
+      "Solar": "1214.2625",
+      "Date": "2023-08-20T20:34:58.651387237Z"
+    },
+    {
+      "MeterID": 2,
+      "ActiveEnergy": "1214.2625",
+      "ReactiveEnergy": "1214.2625",
+      "CapacitiveReactive": "1214.2625",
+      "Solar": "1214.2625",
+      "Date": "2023-08-19T20:34:58.651387237Z"
+    },
+    {
+      "MeterID": 2,
+      "ActiveEnergy": "1214.2625",
+      "ReactiveEnergy": "1214.2625",
+      "CapacitiveReactive": "1214.2625",
+      "Solar": "1214.2625",
+      "Date": "2023-08-20T20:34:58.651387237Z"
+    }
+  ]

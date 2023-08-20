@@ -1,0 +1,34 @@
+[
+    {
+      "MeterID": 1,
+      "ActiveEnergy": "1214.2625",
+      "ReactiveEnergy": "1214.2625",
+      "CapacitiveReactive": "1214.2625",
+      "Solar": "1214.2625",
+      "MonthYear": "APRIL 2023"
+    },
+    {
+      "MeterID": 1,
+      "ActiveEnergy": "1214.2625",
+      "ReactiveEnergy": "1214.2625",
+      "CapacitiveReactive": "1214.2625",
+      "Solar": "1214.2625",
+      "MonthYear": "AUGUST 2022"
+    },
+    {
+      "MeterID": 2,
+      "ActiveEnergy": "1214.2625",
+      "ReactiveEnergy": "1214.2625",
+      "CapacitiveReactive": "1214.2625",
+      "Solar": "1214.2625",
+      "MonthYear": "APRIL 2023"
+    },
+    {
+      "MeterID": 2,
+      "ActiveEnergy": "1214.2625",
+      "ReactiveEnergy": "1214.2625",
+      "CapacitiveReactive": "1214.2625",
+      "Solar": "1214.2625",
+      "MonthYear": "AUGUST 2022"
+    }
+  ]
