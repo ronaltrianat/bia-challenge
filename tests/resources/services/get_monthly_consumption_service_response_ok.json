@@ -2,7 +2,7 @@
     "data_graph": [
       {
         "meter_id": 1,
-        "address": "",
+        "address": "address mock",
         "active": [
           "1214.2625",
           "1214.2625"
@@ -26,7 +26,7 @@
       },
       {
         "meter_id": 2,
-        "address": "",
+        "address": "address mock",
         "active": [
           "1214.2625",
           "1214.2625"

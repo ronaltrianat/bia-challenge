@@ -1,4 +1,4 @@
-package services_test
+package consumption_test
 
 import (
 	"bia-challenge/internal/core/domain"
@@ -7,18 +7,38 @@ import (
 )
 
 const (
-	_DailyConsumptionRepositoryResponseOkFile = "../../../tests/resources/services/daily_consumption_repository_response_ok.json"
-	_GetDailyConsumptionServiceResponseOk     = "../../../tests/resources/services/get_daily_consumption_service_response_ok.json"
+	_DailyConsumptionRepositoryResponseOkFile = "../../../../tests/resources/services/daily_consumption_repository_response_ok.json"
+	_GetDailyConsumptionServiceResponseOk     = "../../../../tests/resources/services/get_daily_consumption_service_response_ok.json"
 
-	_WeeklyConsumptionRepositoryResponseOkFile = "../../../tests/resources/services/weekly_consumption_repository_response_ok.json"
-	_GetWeeklyConsumptionServiceResponseOk     = "../../../tests/resources/services/get_weekly_consumption_service_response_ok.json"
+	_WeeklyConsumptionRepositoryResponseOkFile = "../../../../tests/resources/services/weekly_consumption_repository_response_ok.json"
+	_GetWeeklyConsumptionServiceResponseOk     = "../../../../tests/resources/services/get_weekly_consumption_service_response_ok.json"
 
-	_MonthlyConsumptionRepositoryResponseOkFile = "../../../tests/resources/services/monthly_consumption_repository_response_ok.json"
-	_GetMonthlyConsumptionServiceResponseOk     = "../../../tests/resources/services/get_monthly_consumption_service_response_ok.json"
+	_MonthlyConsumptionRepositoryResponseOkFile = "../../../../tests/resources/services/monthly_consumption_repository_response_ok.json"
+	_GetMonthlyConsumptionServiceResponseOk     = "../../../../tests/resources/services/get_monthly_consumption_service_response_ok.json"
 )
 
 type biaRepositoryMockPort struct {
 	mock.Mock
+}
+
+type addressesMockPort struct {
+	mock.Mock
+}
+
+func (m *addressesMockPort) GetAddressFromMeterID(meterID int) (string, error) {
+	ret := m.Called(meterID)
+
+	var r0 string
+	if ret.Get(0) != nil {
+		r0 = ret.String(0)
+	}
+
+	var r1 error
+	if ret.Get(1) != nil {
+		r1 = ret.Get(1).(error)
+	}
+
+	return r0, r1
 }
 
 func (m *biaRepositoryMockPort) GetDailyConsumptionByMetersIdsAndBetweenDates(

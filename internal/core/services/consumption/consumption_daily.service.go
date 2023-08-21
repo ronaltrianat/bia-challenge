@@ -1,4 +1,4 @@
-package services
+package consumption
 
 import (
 	"bia-challenge/internal/core/domain"
@@ -10,11 +10,13 @@ import (
 const _dailyDateFormat = "Jan 02 2006"
 
 type consumptionDailyService struct {
-	biaDB ports.BiaRepositoryPort
+	biaDB            ports.BiaRepositoryPort
+	addressesService ports.AddressesServicePort
 }
 
-func NewConsumptionDailyService(biaDB ports.BiaRepositoryPort) *consumptionDailyService {
-	return &consumptionDailyService{biaDB: biaDB}
+func NewConsumptionDailyService(biaDB ports.BiaRepositoryPort,
+	addressesService ports.AddressesServicePort) *consumptionDailyService {
+	return &consumptionDailyService{biaDB: biaDB, addressesService: addressesService}
 }
 
 func (srv *consumptionDailyService) execute(
@@ -34,6 +36,10 @@ func (srv *consumptionDailyService) execute(
 			dataGraph = value
 		} else {
 			dataGraph = domain.DataGraph{MeterID: v.MeterID}
+		}
+
+		if address, err := srv.addressesService.GetAddressFromMeterID(v.MeterID); err == nil {
+			dataGraph.Address = address
 		}
 
 		dataGraph.Period = append(dataGraph.Period, v.Date.Format(_dailyDateFormat))
