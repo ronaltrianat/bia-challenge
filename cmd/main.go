@@ -1,6 +1,7 @@
 package main
 
 import (
+	mysqlhelper "bia-challenge/cmd/helpers/mysql"
 	"bia-challenge/internal/adapters/handler"
 	"bia-challenge/internal/adapters/repository"
 	"bia-challenge/internal/core/services"
@@ -19,7 +20,8 @@ func main() {
 }
 
 func initRoutes() {
-	mysqlRepository := repository.NewMySQLRepository()
+	mysqlDB := mysqlhelper.GetMySQLConnection()
+	mysqlRepository := repository.NewMySQLRepository(mysqlDB)
 	biaService := services.NewBiaService(mysqlRepository)
 	biaHandler := handler.NewHttpHandler(biaService)
 
