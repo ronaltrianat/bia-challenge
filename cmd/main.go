@@ -32,7 +32,10 @@ func initRoutes() {
 
 	r.Get("/consumption", biaHandler.GetEnergyConsumption)
 
-	http.ListenAndServe(":3000", r)
+	log.Println("starting app")
+	if err := http.ListenAndServe(":3000", r); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func loadConfiguration() {
