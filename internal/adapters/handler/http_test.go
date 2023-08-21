@@ -197,7 +197,7 @@ func TestGetEnergyConsumption_RequestValidationErrors(t *testing.T) {
 			wantBody: "{\"status\":\"Invalid request.\",\"error\":\"invalid start date format : invalid end date format\"}",
 		},
 		{
-			name: "must return http.StatusBadRequest to invalid meters ids",
+			name: "must return http.StatusBadRequest to required meters ids",
 			args: func(*testing.T) args {
 				req, err := http.NewRequest("GET", "/consumption", nil)
 				if err != nil {
@@ -218,7 +218,29 @@ func TestGetEnergyConsumption_RequestValidationErrors(t *testing.T) {
 			wantBody: "{\"status\":\"Invalid request.\",\"error\":\"meters_ids are required\"}",
 		},
 		{
-			name: "must return http.StatusBadRequest to invalid  kind period",
+			name: "must return http.StatusBadRequest to invalid meters ids",
+			args: func(*testing.T) args {
+				req, err := http.NewRequest("GET", "/consumption", nil)
+				if err != nil {
+					t.Fatalf("fail to create request: %s", err.Error())
+				}
+
+				q := req.URL.Query()
+				q.Add("start_date", "2023-06-01")
+				q.Add("end_date", "2023-07-01")
+				q.Add("kind_period", "weekly")
+				q.Add("meters_ids", "a")
+				req.URL.RawQuery = q.Encode()
+
+				return args{
+					req: req,
+				}
+			},
+			wantCode: http.StatusBadRequest,
+			wantBody: "{\"status\":\"Invalid request.\",\"error\":\"meters_ids are invalid\"}",
+		},
+		{
+			name: "must return http.StatusBadRequest to required  kind period",
 			args: func(*testing.T) args {
 				req, err := http.NewRequest("GET", "/consumption", nil)
 				if err != nil {
@@ -236,7 +258,29 @@ func TestGetEnergyConsumption_RequestValidationErrors(t *testing.T) {
 				}
 			},
 			wantCode: http.StatusBadRequest,
-			wantBody: "{\"status\":\"Invalid request.\",\"error\":\"kind_period are required\"}",
+			wantBody: "{\"status\":\"Invalid request.\",\"error\":\"kind_period is required\"}",
+		},
+		{
+			name: "must return http.StatusBadRequest to invalid  kind period",
+			args: func(*testing.T) args {
+				req, err := http.NewRequest("GET", "/consumption", nil)
+				if err != nil {
+					t.Fatalf("fail to create request: %s", err.Error())
+				}
+
+				q := req.URL.Query()
+				q.Add("start_date", "2023-06-01")
+				q.Add("end_date", "2023-07-01")
+				q.Add("meters_ids", "1")
+				q.Add("kind_period", "cxxxx")
+				req.URL.RawQuery = q.Encode()
+
+				return args{
+					req: req,
+				}
+			},
+			wantCode: http.StatusBadRequest,
+			wantBody: "{\"status\":\"Invalid request.\",\"error\":\"kind_period is invalid\"}",
 		},
 	}
 

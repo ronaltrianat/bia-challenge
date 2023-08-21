@@ -8,10 +8,10 @@ import (
 )
 
 type consumptionMonthlyService struct {
-	biaDB ports.BiaRepository
+	biaDB ports.BiaRepositoryPort
 }
 
-func NewConsumptionMonthlyService(biaDB ports.BiaRepository) *consumptionMonthlyService {
+func NewConsumptionMonthlyService(biaDB ports.BiaRepositoryPort) *consumptionMonthlyService {
 	return &consumptionMonthlyService{biaDB: biaDB}
 }
 

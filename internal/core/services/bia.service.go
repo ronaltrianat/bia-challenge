@@ -6,7 +6,7 @@ import (
 )
 
 type biaService struct {
-	biaDB   ports.BiaRepository
+	biaDB   ports.BiaRepositoryPort
 	factory *energyConsumptionFactory
 }
 
@@ -18,7 +18,7 @@ type energyConsumptionFactory struct {
 	strategies map[domain.KindPeriod]energyConsumptionInterface
 }
 
-func NewBiaService(biaDB ports.BiaRepository) *biaService {
+func NewBiaService(biaDB ports.BiaRepositoryPort) *biaService {
 	consumptionFactory := newEnergyConsumptionFactory(biaDB)
 	return &biaService{biaDB: biaDB, factory: consumptionFactory}
 }
@@ -28,7 +28,7 @@ func (srv *biaService) GetEnergyConsumption(
 	return srv.factory.strategies[request.KindPeriod].execute(request)
 }
 
-func newEnergyConsumptionFactory(biaDB ports.BiaRepository) *energyConsumptionFactory {
+func newEnergyConsumptionFactory(biaDB ports.BiaRepositoryPort) *energyConsumptionFactory {
 	strategies := make(map[domain.KindPeriod]energyConsumptionInterface)
 	strategies[domain.Monthly] = NewConsumptionMonthlyService(biaDB)
 	strategies[domain.Daily] = NewConsumptionDailyService(biaDB)

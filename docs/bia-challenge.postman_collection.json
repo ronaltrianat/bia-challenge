@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "8793752d-ecb5-40af-b310-819f7acd4ce9",
+		"name": "bia-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3570303"
+	},
+	"item": [
+		{
+			"name": "consumption-daily",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/consumption?start_date=2023-06-01&end_date=2023-06-10&kind_period=daily&meters_ids=1&meters_ids=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"consumption"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2023-06-01"
+						},
+						{
+							"key": "end_date",
+							"value": "2023-06-10"
+						},
+						{
+							"key": "kind_period",
+							"value": "daily"
+						},
+						{
+							"key": "meters_ids",
+							"value": "1"
+						},
+						{
+							"key": "meters_ids",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "consumption-weekly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/consumption?start_date=2023-06-01&end_date=2023-06-26&kind_period=weekly&meters_ids=1&meters_ids=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"consumption"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2023-06-01"
+						},
+						{
+							"key": "end_date",
+							"value": "2023-06-26"
+						},
+						{
+							"key": "kind_period",
+							"value": "weekly"
+						},
+						{
+							"key": "meters_ids",
+							"value": "1"
+						},
+						{
+							"key": "meters_ids",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "consumption-monthly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/consumption?start_date=2023-06-01&end_date=2023-07-10&kind_period=monthly&meters_ids=1&meters_ids=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"consumption"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2023-06-01"
+						},
+						{
+							"key": "end_date",
+							"value": "2023-07-10"
+						},
+						{
+							"key": "kind_period",
+							"value": "monthly"
+						},
+						{
+							"key": "meters_ids",
+							"value": "1"
+						},
+						{
+							"key": "meters_ids",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

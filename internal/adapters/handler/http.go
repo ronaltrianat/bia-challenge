@@ -21,15 +21,17 @@ const (
 var (
 	ErrInvalidStartDateFormat = errors.New("invalid start date format")
 	ErrInvalidEndDateFormat   = errors.New("invalid end date format")
-	ErrInvalidMetersIds       = errors.New("meters_ids are required")
-	ErrInvalidkindPeriod      = errors.New("kind_period are required")
+	ErrMetersIdsRequired      = errors.New("meters_ids are required")
+	ErrInvalidMetersIds       = errors.New("meters_ids are invalid")
+	ErrInvalidkindPeriod      = errors.New("kind_period is invalid")
+	ErrKindPeriodRequired     = errors.New("kind_period is required")
 )
 
 type httpHandler struct {
-	biaService ports.BiaService
+	biaService ports.BiaServicePort
 }
 
-func NewHttpHandler(biaService ports.BiaService) *httpHandler {
+func NewHttpHandler(biaService ports.BiaServicePort) *httpHandler {
 	return &httpHandler{biaService: biaService}
 }
 
@@ -54,12 +56,18 @@ func (hdl *httpHandler) buildRequest(queryParameters url.Values) (*domain.GetEne
 
 	metersIds := queryParameters["meters_ids"]
 	if len(metersIds) == 0 {
-		return nil, ErrInvalidMetersIds
+		return nil, ErrMetersIdsRequired
 	}
 
 	kindPeriod := queryParameters.Get("kind_period")
 	if kindPeriod == "" {
-		return nil, ErrInvalidkindPeriod
+		return nil, ErrKindPeriodRequired
+	}
+
+	switch domain.KindPeriod(kindPeriod) {
+	case domain.Daily, domain.Monthly, domain.Weekly:
+	default:
+		validationErrors = append(validationErrors, ErrInvalidkindPeriod)
 	}
 
 	startDate := queryParameters.Get("start_date")
@@ -76,7 +84,11 @@ func (hdl *httpHandler) buildRequest(queryParameters url.Values) (*domain.GetEne
 	ints := make([]int, len(metersIds))
 
 	for i, s := range metersIds {
-		ints[i], _ = strconv.Atoi(s)
+		if value, err := strconv.Atoi(s); err != nil {
+			validationErrors = append(validationErrors, ErrInvalidMetersIds)
+		} else {
+			ints[i] = value
+		}
 	}
 
 	request := &domain.GetEnergyConsumptionRequest{

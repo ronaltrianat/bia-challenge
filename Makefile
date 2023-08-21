@@ -4,17 +4,15 @@ default: build
 
 all: test build
 
+run:
+	@echo "start application"
+	go run cmd/main.go
+
 tidy:  ## Execute tidy comand
 	@go mod tidy
 
 build: tidy ## Build the binary file
 	go build -i -v $(PKG_LIST)
-
-docker-build:
-	docker build -t operation-quasar-fire .
-
-docker-run:
-	docker run -d -p 5000:5000 operation-quasar-fire
 
 start-infra:
 	docker compose -f resources/docker-compose/docker-compose.yml --env-file .env up -d

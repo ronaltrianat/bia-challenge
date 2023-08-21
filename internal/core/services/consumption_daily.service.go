@@ -10,10 +10,10 @@ import (
 const _dailyDateFormat = "Jan 02 2006"
 
 type consumptionDailyService struct {
-	biaDB ports.BiaRepository
+	biaDB ports.BiaRepositoryPort
 }
 
-func NewConsumptionDailyService(biaDB ports.BiaRepository) *consumptionDailyService {
+func NewConsumptionDailyService(biaDB ports.BiaRepositoryPort) *consumptionDailyService {
 	return &consumptionDailyService{biaDB: biaDB}
 }
 
