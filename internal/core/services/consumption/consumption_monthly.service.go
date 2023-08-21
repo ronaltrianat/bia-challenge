@@ -1,4 +1,4 @@
-package services
+package consumption
 
 import (
 	"bia-challenge/internal/core/domain"
@@ -7,25 +7,27 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type consumptionWeeklyService struct {
-	biaDB ports.BiaRepositoryPort
+type consumptionMonthlyService struct {
+	biaDB            ports.BiaRepositoryPort
+	addressesService ports.AddressesServicePort
 }
 
-func NewConsumptionWeeklyService(biaDB ports.BiaRepositoryPort) *consumptionWeeklyService {
-	return &consumptionWeeklyService{biaDB: biaDB}
+func NewConsumptionMonthlyService(biaDB ports.BiaRepositoryPort,
+	addressesService ports.AddressesServicePort) *consumptionMonthlyService {
+	return &consumptionMonthlyService{biaDB: biaDB, addressesService: addressesService}
 }
 
-func (srv *consumptionWeeklyService) execute(
+func (srv *consumptionMonthlyService) execute(
 	request *domain.GetEnergyConsumptionRequest) (*domain.GetEnergyConsumptionResponse, error) {
 
-	weeklyConsumption, err := srv.biaDB.GetWeeklyConsumptionByMetersIdsAndBetweenDates(
+	monthlyConsumption, err := srv.biaDB.GetMonthlyConsumptionByMetersIdsAndBetweenDates(
 		request.MetersIDs, request.StartDate, request.EndDate)
 	if err != nil {
 		return nil, err
 	}
 
 	consumptions := make(map[int]domain.DataGraph)
-	for _, v := range weeklyConsumption {
+	for _, v := range monthlyConsumption {
 		var dataGraph domain.DataGraph
 
 		if value, found := consumptions[v.MeterID]; found {
@@ -34,7 +36,11 @@ func (srv *consumptionWeeklyService) execute(
 			dataGraph = domain.DataGraph{MeterID: v.MeterID}
 		}
 
-		dataGraph.Period = append(dataGraph.Period, v.Week)
+		if address, err := srv.addressesService.GetAddressFromMeterID(v.MeterID); err == nil {
+			dataGraph.Address = address
+		}
+
+		dataGraph.Period = append(dataGraph.Period, v.MonthYear)
 
 		if value, err := decimal.NewFromString(v.ActiveEnergy); err == nil {
 			dataGraph.Active = append(dataGraph.Active, value)

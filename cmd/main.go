@@ -4,7 +4,8 @@ import (
 	mysqlhelper "bia-challenge/cmd/helpers/mysql"
 	"bia-challenge/internal/adapters/handler"
 	"bia-challenge/internal/adapters/repository"
-	"bia-challenge/internal/core/services"
+	addressesservice "bia-challenge/internal/core/services/addresses"
+	consumptionservice "bia-challenge/internal/core/services/consumption"
 	"log"
 	"net/http"
 
@@ -22,7 +23,8 @@ func main() {
 func initRoutes() {
 	mysqlDB := mysqlhelper.GetMySQLConnection()
 	mysqlRepository := repository.NewMySQLRepository(mysqlDB)
-	biaService := services.NewBiaService(mysqlRepository)
+	addressesService := addressesservice.NewAddressesService()
+	biaService := consumptionservice.NewBiaService(mysqlRepository, addressesService)
 	biaHandler := handler.NewHttpHandler(biaService)
 
 	r := chi.NewRouter()
